@@ -78,14 +78,18 @@ public class MainActivity extends ActionBarActivity {
                 final String KEY_PARAM = "key";
                 final String QUERY_PARAM = "q";
 
-                Uri.Builder tmpUri = Uri.parse(SEARCH_BASE_URL).buildUpon()
-                        .appendQueryParameter(KEY_PARAM, API_KEY);
+                String ingredientsStr = "";
                 for (String s : ingredients) {
-                    tmpUri.appendQueryParameter(QUERY_PARAM, s + "%20");
+                    ingredientsStr += s + "%20";
                 }
 
-                URL url = new URL(tmpUri.build().toString());
-                Log.v(LOG_TAG, "Built URI " + tmpUri.toString());
+                Uri builtUri = Uri.parse(SEARCH_BASE_URL).buildUpon()
+                        .appendQueryParameter(KEY_PARAM, API_KEY)
+                        .appendQueryParameter(QUERY_PARAM, ingredientsStr)
+                        .build();
+
+                URL url = new URL(builtUri.toString());
+                Log.v(LOG_TAG, "Built URI " + builtUri.toString());
 
                 // Create the request to OpenWeatherMap, and open the connection
                 urlConnection = (HttpURLConnection) url.openConnection();
