@@ -14,7 +14,9 @@ import java.util.Arrays;
 
 public class MainActivity extends ActionBarActivity {
 
+    // test comment: angela pushed code
     final String API_KEY = "1ceebd1c1ae69bbeaa5b6a18aa987aab";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,9 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void test() {
+
+        final String test = "comment";
+
         ArrayList<String> ingredients = new ArrayList<String>(
                 Arrays.asList("apple", "banana", "corn")
         );
