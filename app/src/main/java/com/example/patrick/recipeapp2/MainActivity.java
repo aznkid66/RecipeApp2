@@ -1,6 +1,7 @@
 package com.example.patrick.recipeapp2;
 
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -55,76 +56,82 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void test() {
+        FetchSearchResultsTask searchResultsTask = new FetchSearchResultsTask();
+        searchResultsTask.execute();
+    }
 
-        final String test = "comment";
+    public class FetchSearchResultsTask extends AsyncTask<Void, Void, Void> {
+        protected Void doInBackground(Void... params) {
+            final String test = "comment";
 
-        ArrayList<String> ingredients = new ArrayList<String>(
-                Arrays.asList("apple", "banana", "corn")
-        );
+            ArrayList<String> ingredients = new ArrayList<String>(
+                    Arrays.asList("apple", "banana", "corn")
+            );
 
-        HttpURLConnection urlConnection = null;
-        BufferedReader reader = null;
+            HttpURLConnection urlConnection = null;
+            BufferedReader reader = null;
 
-        // will contain raw JSON response as a string
-        String searchJsonStr = null;
-        try {
-            final String SEARCH_BASE_URL = "http://food2fork.com/api/search?";
-            final String KEY_PARAM = "key";
-            final String QUERY_PARAM = "q";
+            // will contain raw JSON response as a string
+            String searchJsonStr = null;
+            try {
+                final String SEARCH_BASE_URL = "http://food2fork.com/api/search?";
+                final String KEY_PARAM = "key";
+                final String QUERY_PARAM = "q";
 
-            Uri.Builder tmpUri = Uri.parse(SEARCH_BASE_URL).buildUpon()
-                    .appendQueryParameter(KEY_PARAM, API_KEY);
-            for (String s : ingredients) {
-                tmpUri.appendQueryParameter(QUERY_PARAM, s + "%20");
-            }
+                Uri.Builder tmpUri = Uri.parse(SEARCH_BASE_URL).buildUpon()
+                        .appendQueryParameter(KEY_PARAM, API_KEY);
+                for (String s : ingredients) {
+                    tmpUri.appendQueryParameter(QUERY_PARAM, s + "%20");
+                }
 
-            URL url = new URL(tmpUri.build().toString());
-            Log.v(LOG_TAG, "Built URI " + tmpUri.toString());
+                URL url = new URL(tmpUri.build().toString());
+                Log.v(LOG_TAG, "Built URI " + tmpUri.toString());
 
-            // Create the request to OpenWeatherMap, and open the connection
-            urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setRequestMethod("GET");
-            urlConnection.connect();
+                // Create the request to OpenWeatherMap, and open the connection
+                urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("GET");
+                urlConnection.connect();
 
-            // Read the input stream into a String
-            InputStream inputStream = urlConnection.getInputStream();
-            StringBuffer buffer = new StringBuffer();
-            if (inputStream == null) {
-                // Nothing to do.
-                return;
-            }
-            reader = new BufferedReader(new InputStreamReader(inputStream));
+                // Read the input stream into a String
+                InputStream inputStream = urlConnection.getInputStream();
+                StringBuffer buffer = new StringBuffer();
+                if (inputStream == null) {
+                    // Nothing to do.
+                    return null;
+                }
+                reader = new BufferedReader(new InputStreamReader(inputStream));
 
-            String line;
-            while ((line = reader.readLine()) != null) {
-                // Since it's JSON, adding a newline isn't necessary (it won't affect parsing)
-                // But it does make debugging a *lot* easier if you print out the completed
-                // buffer for debugging.
-                buffer.append(line + "\n");
-            }
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    // Since it's JSON, adding a newline isn't necessary (it won't affect parsing)
+                    // But it does make debugging a *lot* easier if you print out the completed
+                    // buffer for debugging.
+                    buffer.append(line + "\n");
+                }
 
-            if (buffer.length() == 0) {
-                // Stream was empty.  No point in parsing.
-                return;
-            }
-            searchJsonStr = buffer.toString();
+                if (buffer.length() == 0) {
+                    // Stream was empty.  No point in parsing.
+                    return null;
+                }
+                searchJsonStr = buffer.toString();
 
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "Error ", e);
-            // If the code didn't successfully get the weather data, there's no point in attempting
-            // to parse it.
-        } finally {
-            if (urlConnection != null) {
-                urlConnection.disconnect();
-            }
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (final IOException e) {
-                    Log.e(LOG_TAG, "Error closing stream", e);
+            } catch (IOException e) {
+                Log.e(LOG_TAG, "Error ", e);
+                // If the code didn't successfully get the weather data, there's no point in attempting
+                // to parse it.
+            } finally {
+                if (urlConnection != null) {
+                    urlConnection.disconnect();
+                }
+                if (reader != null) {
+                    try {
+                        reader.close();
+                    } catch (final IOException e) {
+                        Log.e(LOG_TAG, "Error closing stream", e);
+                    }
                 }
             }
+            return null;
         }
-
     }
 }
