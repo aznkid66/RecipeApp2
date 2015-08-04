@@ -14,6 +14,7 @@ import java.util.Arrays;
 
 public class MainActivity extends ActionBarActivity {
 
+    // test comment: food2fork API key
     final String API_KEY = "1ceebd1c1ae69bbeaa5b6a18aa987aab";
 
     @Override
