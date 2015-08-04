@@ -19,8 +19,8 @@ import java.util.Arrays;
 
 public class MainActivity extends ActionBarActivity {
 
+    // test comment: angela pushed code
     private final String LOG_TAG = MainActivity.class.getSimpleName();
-
     final String API_KEY = "1ceebd1c1ae69bbeaa5b6a18aa987aab";
 
     @Override
@@ -55,6 +55,9 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void test() {
+
+        final String test = "comment";
+
         ArrayList<String> ingredients = new ArrayList<String>(
                 Arrays.asList("apple", "banana", "corn")
         );
