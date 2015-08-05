@@ -16,7 +16,7 @@ public class SearchResultsActivity extends ActionBarActivity {
         setContentView(R.layout.activity_detail);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
+                    //.add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
     }
@@ -64,7 +64,7 @@ public class SearchResultsActivity extends ActionBarActivity {
 //        }
     }
 
-    @Override
+//    @Override
     public void onItemSelected(Uri contentUri) {
         // this is probably not needed
 //        if (mTwoPane) {

@@ -1,6 +1,16 @@
-public static class SearchResultsFragment extends Fragment {
+package com.example.patrick.recipeapp2;
 
-    private static final String LOG_TAG = DetailFragment.class.getSimpleName();
+import android.net.Uri;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.ShareActionProvider;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+public class SearchResultsFragment extends Fragment {
+
+    private static final String LOG_TAG = SearchResultsFragment.class.getSimpleName();
     static final String DETAIL_URI = "URI";
 
     private static final String FORECAST_SHARE_HASHTAG = " #RecipeApp";

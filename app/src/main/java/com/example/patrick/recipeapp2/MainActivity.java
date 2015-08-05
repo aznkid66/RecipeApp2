@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,11 +25,20 @@ public class MainActivity extends ActionBarActivity {
     final String API_KEY = "1ceebd1c1ae69bbeaa5b6a18aa987aab";
     private static final String DETAILFRAGMENT_TAG = "DFTAG";
 
+    ArrayList<String> mIngredients;
+    String mSearchJsonStr;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mIngredients = new ArrayList<String>(
+                Arrays.asList("apple", "banana", "corn")
+        );
+        mSearchJsonStr = null;
+
+        ((TextView)findViewById(R.id.hello_world)).setText("apple");
     }
 
     @Override
@@ -48,6 +58,9 @@ public class MainActivity extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             test();
+            if (mSearchJsonStr!=null) {
+                ((TextView)findViewById(R.id.hello_world)).setText("banana");
+            }
             return true;
         }
 
@@ -63,22 +76,18 @@ public class MainActivity extends ActionBarActivity {
         protected Void doInBackground(Void... params) {
             final String test = "comment";
 
-            ArrayList<String> ingredients = new ArrayList<String>(
-                    Arrays.asList("apple", "banana", "corn")
-            );
-
             HttpURLConnection urlConnection = null;
             BufferedReader reader = null;
 
             // will contain raw JSON response as a string
-            String searchJsonStr = null;
+            mSearchJsonStr = null;
             try {
                 final String SEARCH_BASE_URL = "http://food2fork.com/api/search?";
                 final String KEY_PARAM = "key";
                 final String QUERY_PARAM = "q";
 
                 String ingredientsStr = "";
-                for (String s : ingredients) {
+                for (String s : mIngredients) {
                     ingredientsStr += s + "%20";
                 }
 
@@ -116,7 +125,8 @@ public class MainActivity extends ActionBarActivity {
                     // Stream was empty.  No point in parsing.
                     return null;
                 }
-                searchJsonStr = buffer.toString();
+                mSearchJsonStr = buffer.toString();
+                Log.v(LOG_TAG, mSearchJsonStr);
 
             } catch (IOException e) {
                 Log.e(LOG_TAG, "Error ", e);
