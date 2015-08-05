@@ -90,7 +90,7 @@ public class MainActivity extends ActionBarActivity {
 
                 String ingredientsStr = "";
                 for (String s : mIngredients) {
-                    ingredientsStr += s + " ";
+                    ingredientsStr += s + ",";
                 }
 
                 Uri builtUri = Uri.parse(SEARCH_BASE_URL).buildUpon()
