@@ -57,9 +57,11 @@ public class MainActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        } else if (id == R.id.action_refresh) {
             test();
             if (mSearchJsonStr!=null) {
-                ((TextView)findViewById(R.id.hello_world)).setText("banana");
+                ((TextView)findViewById(R.id.hello_world)).setText(mSearchJsonStr);
             }
             return true;
         }
@@ -88,7 +90,7 @@ public class MainActivity extends ActionBarActivity {
 
                 String ingredientsStr = "";
                 for (String s : mIngredients) {
-                    ingredientsStr += s + "%20";
+                    ingredientsStr += s + " ";
                 }
 
                 Uri builtUri = Uri.parse(SEARCH_BASE_URL).buildUpon()
