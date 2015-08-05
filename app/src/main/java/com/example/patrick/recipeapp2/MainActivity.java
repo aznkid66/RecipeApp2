@@ -1,13 +1,21 @@
 package com.example.patrick.recipeapp2;
 
+import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,7 +24,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -26,7 +34,9 @@ public class MainActivity extends ActionBarActivity {
     final String API_KEY_ROU = "55c1d014f6fceb6f0700003f"; // recipeon.us API key
     private static final String DETAILFRAGMENT_TAG = "DFTAG";
 
-    ArrayList<String> mIngredients;
+    protected MainDbHelper db;
+    List<String> mIngredientsList;
+    MyAdapter mAdapt;
     String mSearchJsonStr;
 
     @Override
@@ -34,12 +44,13 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mIngredients = new ArrayList<String>(
-                Arrays.asList("apple", "banana", "corn")
-        );
         mSearchJsonStr = null;
 
-        ((TextView)findViewById(R.id.hello_world)).setText("apple");
+        db = new MainDbHelper(this);
+        mIngredientsList = db.getAllIngredients();
+        mAdapt = new MyAdapter(this, R.layout.activity_main_fragment, mIngredientsList);
+        ListView listTask = (ListView) findViewById(R.id.ingredients_list);
+        listTask.setAdapter(mAdapt);
     }
 
     @Override
@@ -70,6 +81,21 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void addIngredientNow(View view) {
+        EditText t = (EditText) findViewById(R.id.editText1);
+        String s = t.getText().toString();
+        if (s.equalsIgnoreCase("")) {
+            Toast.makeText(this, "Enter ingredient name first!",
+            Toast.LENGTH_LONG);
+        } else {
+            db.addIngredient(s);
+            Log.d(LOG_TAG, s + " added");
+            t.setText("");
+            mAdapt.add(s);
+            mAdapt.notifyDataSetChanged();
+        }
+    }
+
     public void test() {
         FetchSearchResultsTask searchResultsTask = new FetchSearchResultsTask();
         searchResultsTask.execute();
@@ -90,7 +116,7 @@ public class MainActivity extends ActionBarActivity {
                 final String QUERY_PARAM = "q";
 
                 String ingredientsStr = "";
-                for (String s : mIngredients) {
+                for (String s : mIngredientsList) {
                     ingredientsStr += s + ",";
                 }
 
@@ -148,6 +174,56 @@ public class MainActivity extends ActionBarActivity {
                 }
             }
             return null;
+        }
+    }
+
+    private class MyAdapter extends ArrayAdapter<String> {
+        Context context;
+        List<String> ingredientsList = new ArrayList<String>();
+        int layoutResourceId;
+        public MyAdapter(Context context, int layoutResourceId,
+                         List<String> objects) {
+            super(context, layoutResourceId, objects);
+            this.layoutResourceId = layoutResourceId;
+            this.ingredientsList = objects;
+            this.context = context;
+        }
+        /**
+         * This method will DEFINe what the view inside the list view will
+         * finally look like Here we are going to code that the checkbox state
+         * is the status of task and check box text is the task name
+         */
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            TextView txt = null;
+            if (convertView == null) {
+                LayoutInflater inflater = (LayoutInflater) context
+                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = inflater.inflate(R.layout.activity_main_fragment,
+                        parent, false);
+                txt = (TextView) convertView.findViewById(R.id.ingredient);
+                convertView.setTag(txt);
+//                txt.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        CheckBox cb = (CheckBox) v;
+//                        Task changeTask = (Task) cb.getTag();
+//                        changeTask.setStatus(cb.isChecked() == true ? 1 : 0);
+//                        db.updateTask(changeTask);
+//                        Toast.makeText(
+//                                getApplicationContext(),
+//                                "Clicked on Checkbox: " + cb.getText() + " is "
+//                                        + cb.isChecked(), Toast.LENGTH_LONG)
+//                                .show();
+//                    }
+//                });
+            } else {
+                txt = (TextView) convertView.getTag();
+            }
+            String current = ingredientsList.get(position);
+            txt.setText(current);
+            txt.setTag(current);
+            return convertView;
         }
     }
 }

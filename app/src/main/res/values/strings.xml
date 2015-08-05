@@ -7,4 +7,5 @@
     <string name="title_activity_detail">DetailActivity</string>
 
     <string name="add_ingredient">Add</string>
+    <string name="remove_ingredient">Remove</string>
 </resources>
