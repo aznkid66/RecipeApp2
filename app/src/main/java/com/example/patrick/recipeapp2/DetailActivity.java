@@ -48,19 +48,47 @@ public class DetailActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
 
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
-            return rootView;
-        }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // this needs to be changed for recipe app
+//        String location = Utility.getPreferredLocation( this );
+//        // update the location in our second pane using the fragment manager
+//        if (location != null && !location.equals(mLocation)) {
+//            ForecastFragment ff = (ForecastFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_forecast);
+//            if ( null != ff ) {
+//                ff.onLocationChanged();
+//            }
+//            DetailFragment df = (DetailFragment)getSupportFragmentManager().findFragmentByTag(DETAILFRAGMENT_TAG);
+//            if ( null != df ) {
+//                df.onLocationChanged(location);
+//            }
+//            mLocation = location;
+//        }
     }
+
+    @Override
+    public void onItemSelected(Uri contentUri) {
+        // this is probably not needed
+//        if (mTwoPane) {
+//            // In two-pane mode, show the detail view in this activity by
+//            // adding or replacing the detail fragment using a
+//            // fragment transaction.
+//            Bundle args = new Bundle();
+//            args.putParcelable(DetailFragment.DETAIL_URI, contentUri);
+//
+//            DetailFragment fragment = new DetailFragment();
+//            fragment.setArguments(args);
+//
+//            getSupportFragmentManager().beginTransaction()
+//                    .replace(R.id.weather_detail_container, fragment, DETAILFRAGMENT_TAG)
+//                    .commit();
+//        } else {
+            Intent intent = new Intent(this, DetailActivity.class)
+                    .setData(contentUri);
+            startActivity(intent);
+        //}
+    }
+
 }

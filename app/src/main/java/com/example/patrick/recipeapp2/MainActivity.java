@@ -20,9 +20,9 @@ import java.util.Arrays;
 
 public class MainActivity extends ActionBarActivity {
 
-    // test comment: angela pushed code
     private final String LOG_TAG = MainActivity.class.getSimpleName();
     final String API_KEY = "1ceebd1c1ae69bbeaa5b6a18aa987aab";
+    private static final String DETAILFRAGMENT_TAG = "DFTAG";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +31,6 @@ public class MainActivity extends ActionBarActivity {
 
         test();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
