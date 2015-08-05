@@ -1,4 +1,4 @@
-public static class DetailFragment extends Fragment {
+public static class SearchResultsFragment extends Fragment {
 
     private static final String LOG_TAG = DetailFragment.class.getSimpleName();
     static final String DETAIL_URI = "URI";
@@ -11,17 +11,8 @@ public static class DetailFragment extends Fragment {
 
     private static final int DETAIL_LOADER = 0;
 
-    private ImageView mIconView;
-    private TextView mFriendlyDateView;
-    private TextView mDateView;
-    private TextView mDescriptionView;
-    private TextView mHighTempView;
-    private TextView mLowTempView;
-    private TextView mHumidityView;
-    private TextView mWindView;
-    private TextView mPressureView;
 
-    public DetailFragment() {
+    public SearchResultsFragment() {
         setHasOptionsMenu(true);
     }
 
