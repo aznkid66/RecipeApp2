@@ -22,7 +22,8 @@ import java.util.Arrays;
 public class MainActivity extends ActionBarActivity {
 
     private final String LOG_TAG = MainActivity.class.getSimpleName();
-    final String API_KEY = "1ceebd1c1ae69bbeaa5b6a18aa987aab";
+    final String API_KEY_F2F = "1ceebd1c1ae69bbeaa5b6a18aa987aab"; // food2fork.com API key
+    final String API_KEY_ROU = "55c1d014f6fceb6f0700003f"; // recipeon.us API key
     private static final String DETAILFRAGMENT_TAG = "DFTAG";
 
     ArrayList<String> mIngredients;
@@ -94,7 +95,7 @@ public class MainActivity extends ActionBarActivity {
                 }
 
                 Uri builtUri = Uri.parse(SEARCH_BASE_URL).buildUpon()
-                        .appendQueryParameter(KEY_PARAM, API_KEY)
+                        .appendQueryParameter(KEY_PARAM, API_KEY_F2F)
                         .appendQueryParameter(QUERY_PARAM, ingredientsStr)
                         .build();
 
