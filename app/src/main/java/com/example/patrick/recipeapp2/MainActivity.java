@@ -72,9 +72,6 @@ public class MainActivity extends ActionBarActivity {
             return true;
         } else if (id == R.id.action_refresh) {
             test();
-            if (mSearchJsonStr!=null) {
-                ((TextView)findViewById(R.id.hello_world)).setText(mSearchJsonStr);
-            }
             return true;
         }
 
@@ -94,6 +91,15 @@ public class MainActivity extends ActionBarActivity {
             mAdapt.add(s);
             mAdapt.notifyDataSetChanged();
         }
+    }
+
+    public void removeIngredientNow(View view) {
+        TextView t = (TextView) findViewById(R.id.ingredient);
+        String s = t.getText().toString();
+        db.removeIngredient(s);
+        Log.d(LOG_TAG, s + " removed");
+        mAdapt.remove(s);
+        mAdapt.notifyDataSetChanged();
     }
 
     public void test() {
@@ -174,6 +180,13 @@ public class MainActivity extends ActionBarActivity {
                 }
             }
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            if (mSearchJsonStr!=null) {
+                ((TextView)findViewById(R.id.hello_world)).setText(mSearchJsonStr);
+            }
         }
     }
 

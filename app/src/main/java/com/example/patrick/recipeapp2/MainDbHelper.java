@@ -42,8 +42,15 @@ public class MainDbHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KEY_INGREDIENT_NAME, ingredientName); // task name
-// Inserting Row
+        // Inserting Row
         db.insert(TABLE_INGREDIENTS, null, values);
+        db.close(); // Closing database connection
+    }
+
+    public void removeIngredient(String ingredientName) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        // Deleting Row
+        db.delete(TABLE_INGREDIENTS, KEY_INGREDIENT_NAME + " = '" + ingredientName + "'", null);
         db.close(); // Closing database connection
     }
 
