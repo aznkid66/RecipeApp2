@@ -226,7 +226,7 @@ public class MainActivity extends ActionBarActivity {
                         .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = inflater.inflate(R.layout.fragment_main,
                         parent, false);
-                txt = (TextView) convertView.findViewById(R.id.ingredient);
+                txt = (TextView) convertView.findViewById(R.id.ingredient); 
                 convertView.setTag(txt);
 //                txt.setOnClickListener(new View.OnClickListener() {
 //                    @Override
