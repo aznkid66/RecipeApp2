@@ -38,7 +38,6 @@ public class MainActivity extends ActionBarActivity {
     protected MainDbHelper db;
     List<String> mIngredientsList;
     MyAdapter mAdapt;
-    String mSearchJsonStr;
 
     protected MainActivity getActivity() {
         return this;
@@ -48,8 +47,6 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        mSearchJsonStr = null;
 
         db = new MainDbHelper(this);
         mIngredientsList = db.getAllIngredients();
@@ -117,6 +114,9 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public class FetchSearchResultsTask extends AsyncTask<Void, Void, Void> {
+
+        String mSearchJsonStr;
+
         protected Void doInBackground(Void... params) {
             final String test = "comment";
 
