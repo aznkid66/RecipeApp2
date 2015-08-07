@@ -1,9 +1,7 @@
 package com.example.patrick.recipeapp2;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -18,11 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -73,7 +67,6 @@ public class MainActivity extends ActionBarActivity {
         if (id == R.id.action_settings) {
             return true;
         } else if (id == R.id.action_refresh) {
-            test();
             return true;
         }
 
@@ -96,7 +89,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void removeIngredientNow(View view) {
-        TextView t = (TextView) findViewById(R.id.ingredient);
+        TextView t = (TextView) ((View) view.getParent()).findViewById(R.id.ingredient);
         String s = t.getText().toString();
         db.removeIngredient(s);
         Log.d(LOG_TAG, s + " removed");
@@ -104,101 +97,29 @@ public class MainActivity extends ActionBarActivity {
         mAdapt.notifyDataSetChanged();
     }
 
-    public void executeSearch(View view) {
-        FetchSearchResultsTask searchResultsTask = new FetchSearchResultsTask();
-        searchResultsTask.execute();
-    }
+    public void executeSearchFromIngredients(View view) {
+        try {
+            final String SEARCH_BASE_URL = "http://food2fork.com/api/search?";
+            final String KEY_PARAM = "key";
+            final String QUERY_PARAM = "q";
 
-    public void test() {
-
-    }
-
-    public class FetchSearchResultsTask extends AsyncTask<Void, Void, Void> {
-
-        String mSearchJsonStr;
-
-        protected Void doInBackground(Void... params) {
-            final String test = "comment";
-
-            HttpURLConnection urlConnection = null;
-            BufferedReader reader = null;
-
-            // will contain raw JSON response as a string
-            mSearchJsonStr = null;
-            try {
-                final String SEARCH_BASE_URL = "http://food2fork.com/api/search?";
-                final String KEY_PARAM = "key";
-                final String QUERY_PARAM = "q";
-
-                String ingredientsStr = "";
-                for (String s : mIngredientsList) {
-                    ingredientsStr += s + ",";
-                }
-
-                Uri builtUri = Uri.parse(SEARCH_BASE_URL).buildUpon()
-                        .appendQueryParameter(KEY_PARAM, API_KEY_F2F)
-                        .appendQueryParameter(QUERY_PARAM, ingredientsStr)
-                        .build();
-
-                URL url = new URL(builtUri.toString());
-                Log.v(LOG_TAG, "Built URI " + builtUri.toString());
-
-                // Create the request to OpenWeatherMap, and open the connection
-                urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setRequestMethod("GET");
-                urlConnection.connect();
-
-                // Read the input stream into a String
-                InputStream inputStream = urlConnection.getInputStream();
-                StringBuffer buffer = new StringBuffer();
-                if (inputStream == null) {
-                    // Nothing to do.
-                    return null;
-                }
-                reader = new BufferedReader(new InputStreamReader(inputStream));
-
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    // Since it's JSON, adding a newline isn't necessary (it won't affect parsing)
-                    // But it does make debugging a *lot* easier if you print out the completed
-                    // buffer for debugging.
-                    buffer.append(line + "\n");
-                }
-
-                if (buffer.length() == 0) {
-                    // Stream was empty.  No point in parsing.
-                    return null;
-                }
-                mSearchJsonStr = buffer.toString();
-                Log.v(LOG_TAG, mSearchJsonStr);
-
-            } catch (IOException e) {
-                Log.e(LOG_TAG, "Error ", e);
-                // If the code didn't successfully get the weather data, there's no point in attempting
-                // to parse it.
-            } finally {
-                if (urlConnection != null) {
-                    urlConnection.disconnect();
-                }
-                if (reader != null) {
-                    try {
-                        reader.close();
-                    } catch (final IOException e) {
-                        Log.e(LOG_TAG, "Error closing stream", e);
-                    }
-                }
+            String ingredientsStr = "";
+            for (String s : mIngredientsList) {
+                ingredientsStr += s + ",";
             }
-            return null;
-        }
 
-        @Override
-        protected void onPostExecute(Void result) {
-//            if (mSearchJsonStr!=null) {
-//                ((TextView)findViewById(R.id.hello_world)).setText(mSearchJsonStr);
-//            }
-            Intent intent = new Intent(getActivity(), SearchResultsActivity.class)
-                    .putExtra(Intent.EXTRA_TEXT, mSearchJsonStr);
-            startActivity(intent);
+            Uri builtUri = Uri.parse(SEARCH_BASE_URL).buildUpon()
+                    .appendQueryParameter(KEY_PARAM, API_KEY_F2F)
+                    .appendQueryParameter(QUERY_PARAM, ingredientsStr)
+                    .build();
+
+            URL url = new URL(builtUri.toString());
+            Log.v(LOG_TAG, "Built URI " + builtUri.toString());
+
+            FetchSearchResultsTask searchResultsTask = new FetchSearchResultsTask(this, url);
+            searchResultsTask.execute();
+        } catch (MalformedURLException e) {
+            Log.e(LOG_TAG, "Error " + e);
         }
     }
 
@@ -226,7 +147,7 @@ public class MainActivity extends ActionBarActivity {
                         .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = inflater.inflate(R.layout.fragment_main,
                         parent, false);
-                txt = (TextView) convertView.findViewById(R.id.ingredient); 
+                txt = (TextView) convertView.findViewById(R.id.ingredient);
                 convertView.setTag(txt);
 //                txt.setOnClickListener(new View.OnClickListener() {
 //                    @Override

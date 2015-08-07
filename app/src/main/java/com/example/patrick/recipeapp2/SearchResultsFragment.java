@@ -1,19 +1,24 @@
 package com.example.patrick.recipeapp2;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.ShareActionProvider;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+
+import com.example.patrick.recipeapp2.data.RecipeContract.RecipeEntry;
 
 public class SearchResultsFragment extends Fragment {
 
     private static final String LOG_TAG = SearchResultsFragment.class.getSimpleName();
     static final String DETAIL_URI = "URI";
 
-    private ArrayAdapter<String> mRecipesAdapter;
+    private RecipesAdapter mRecipesAdapter;
+
     private ListView mListView;
     private int mPosition = ListView.INVALID_POSITION;
     private boolean mUseTodayLayout;
@@ -25,6 +30,17 @@ public class SearchResultsFragment extends Fragment {
 //    private Uri mUri;
 
     private static final int DETAIL_LOADER = 0;
+
+    private static final String[] DETAIL_COLUMNS = {
+            RecipeEntry.TABLE_NAME + "." +
+            RecipeEntry.COLUMN_NAME,
+            RecipeEntry.COLUMN_LINK
+    };
+
+    // These indices are tied to DETAIL_COLUMNS.  If DETAIL_COLUMNS changes, these
+    // must change.
+    public static final int COL_RECIPE_NAME = 0;
+    public static final int COL_RECIPE_LINK = 1;
 
 
     public SearchResultsFragment() {
@@ -41,7 +57,7 @@ public class SearchResultsFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.forecastfragment, menu);
+        inflater.inflate(R.menu.menu_detail, menu);
     }
 
 
@@ -71,10 +87,10 @@ public class SearchResultsFragment extends Fragment {
         // use it to populate the ListView it's attached to.
         mRecipesAdapter = new RecipesAdapter(getActivity(), null, 0);
 
-        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_search_results, container, false);
 
         // Get a reference to the ListView, and attach this adapter to it.
-        mListView = (ListView) rootView.findViewById(R.id.listview_forecast);
+        mListView = (ListView) rootView.findViewById(R.id.listview_recipes);
         mListView.setAdapter(mRecipesAdapter);
         // this is for the clicked open page
         // We'll call our MainActivity

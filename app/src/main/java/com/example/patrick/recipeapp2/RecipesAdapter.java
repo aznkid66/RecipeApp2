@@ -25,7 +25,7 @@ public class RecipesAdapter extends CursorAdapter {
 
         public ViewHolder(View view) {
 
-            nameView = (TextView) view.findViewById(R.id.list_item_forecast_textview);
+            nameView = (TextView) view.findViewById(R.id.list_item_recipes);
 
         }
     }
@@ -52,14 +52,10 @@ public class RecipesAdapter extends CursorAdapter {
         ViewHolder viewHolder = (ViewHolder) view.getTag();
 
         // Read recipe name from cursor
-        String name = cursor.getString(SearchResultsFragment.COL_WEATHER_DESC);
+        String name = cursor.getString(SearchResultsFragment.COL_RECIPE_NAME);
         // Find TextView and set weather forecast on it
         viewHolder.nameView.setText(name);
 
 
-    }
-
-    public void setUseTodayLayout(boolean useTodayLayout) {
-        mUseTodayLayout = useTodayLayout;
     }
 }
