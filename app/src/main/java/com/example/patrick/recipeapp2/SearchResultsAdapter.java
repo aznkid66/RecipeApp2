@@ -9,10 +9,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 /**
- * {@link RecipesAdapter} exposes a list of recipes
+ * {@link SearchResultsAdapter} exposes a list of recipes
  * from a {@link Cursor} to a {@link android.widget.ListView}.
  */
-public class RecipesAdapter extends CursorAdapter {
+public class SearchResultsAdapter extends CursorAdapter {
 
     // Flag to determine if we want to use a separate view for "today".
     private boolean mUseTodayLayout = true;
@@ -30,7 +30,7 @@ public class RecipesAdapter extends CursorAdapter {
         }
     }
 
-    public RecipesAdapter(Context context, Cursor c, int flags) {
+    public SearchResultsAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
     }
 
