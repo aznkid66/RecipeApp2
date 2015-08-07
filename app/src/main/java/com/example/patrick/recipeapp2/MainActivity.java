@@ -1,6 +1,7 @@
 package com.example.patrick.recipeapp2;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -100,6 +101,12 @@ public class MainActivity extends ActionBarActivity {
         Log.d(LOG_TAG, s + " removed");
         mAdapt.remove(s);
         mAdapt.notifyDataSetChanged();
+    }
+
+    public void executeSearch(View view) {
+        Intent intent = new Intent(this, SearchResultsActivity.class)
+                .putExtra(Intent.EXTRA_TEXT, mSearchJsonStr);
+        startActivity(intent);
     }
 
     public void test() {

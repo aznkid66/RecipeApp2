@@ -35,5 +35,13 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/add_ingredient_button" >
     </ListView>
+    <Button
+        android:id="@+id/search_button"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="14dp"
+        android:text="@string/search"
+        android:onClick="executeSearch"/>
 
 </RelativeLayout>
