@@ -66,9 +66,6 @@ public class SearchResultsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
-        return rootView;
-
 
         // The ArrayAdapter will take data from a source and
         // use it to populate the ListView it's attached to.
@@ -79,6 +76,7 @@ public class SearchResultsFragment extends Fragment {
         // Get a reference to the ListView, and attach this adapter to it.
         mListView = (ListView) rootView.findViewById(R.id.listview_forecast);
         mListView.setAdapter(mRecipesAdapter);
+        // this is for the clicked open page
         // We'll call our MainActivity
 //        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //
@@ -97,5 +95,7 @@ public class SearchResultsFragment extends Fragment {
 //                mPosition = position;
 //            }
 //        });
+
+        return rootView;
     }
 }
