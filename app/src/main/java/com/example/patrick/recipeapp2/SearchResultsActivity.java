@@ -6,9 +6,12 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 
 public class SearchResultsActivity extends ActionBarActivity {
+
+    public String mJsonStr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +22,10 @@ public class SearchResultsActivity extends ActionBarActivity {
                     //.add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
+
+        mJsonStr = getIntent().getStringExtra(Intent.EXTRA_TEXT);
+        Toast.makeText(this, mJsonStr,
+                Toast.LENGTH_LONG).show();
     }
 
 
