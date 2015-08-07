@@ -1,6 +1,7 @@
 package com.example.patrick.recipeapp2;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -37,18 +38,19 @@ public class MainActivity extends ActionBarActivity {
     protected MainDbHelper db;
     List<String> mIngredientsList;
     MyAdapter mAdapt;
-    String mSearchJsonStr;
+
+    protected MainActivity getActivity() {
+        return this;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mSearchJsonStr = null;
-
         db = new MainDbHelper(this);
         mIngredientsList = db.getAllIngredients();
-        mAdapt = new MyAdapter(this, R.layout.activity_main_fragment, mIngredientsList);
+        mAdapt = new MyAdapter(this, R.layout.fragment_main, mIngredientsList);
         ListView listTask = (ListView) findViewById(R.id.ingredients_list);
         listTask.setAdapter(mAdapt);
     }
@@ -102,12 +104,19 @@ public class MainActivity extends ActionBarActivity {
         mAdapt.notifyDataSetChanged();
     }
 
-    public void test() {
+    public void executeSearch(View view) {
         FetchSearchResultsTask searchResultsTask = new FetchSearchResultsTask();
         searchResultsTask.execute();
     }
 
+    public void test() {
+
+    }
+
     public class FetchSearchResultsTask extends AsyncTask<Void, Void, Void> {
+
+        String mSearchJsonStr;
+
         protected Void doInBackground(Void... params) {
             final String test = "comment";
 
@@ -184,9 +193,12 @@ public class MainActivity extends ActionBarActivity {
 
         @Override
         protected void onPostExecute(Void result) {
-            if (mSearchJsonStr!=null) {
-                ((TextView)findViewById(R.id.hello_world)).setText(mSearchJsonStr);
-            }
+//            if (mSearchJsonStr!=null) {
+//                ((TextView)findViewById(R.id.hello_world)).setText(mSearchJsonStr);
+//            }
+            Intent intent = new Intent(getActivity(), SearchResultsActivity.class)
+                    .putExtra(Intent.EXTRA_TEXT, mSearchJsonStr);
+            startActivity(intent);
         }
     }
 
@@ -212,9 +224,9 @@ public class MainActivity extends ActionBarActivity {
             if (convertView == null) {
                 LayoutInflater inflater = (LayoutInflater) context
                         .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.activity_main_fragment,
+                convertView = inflater.inflate(R.layout.fragment_main,
                         parent, false);
-                txt = (TextView) convertView.findViewById(R.id.ingredient);
+                txt = (TextView) convertView.findViewById(R.id.ingredient); 
                 convertView.setTag(txt);
 //                txt.setOnClickListener(new View.OnClickListener() {
 //                    @Override
