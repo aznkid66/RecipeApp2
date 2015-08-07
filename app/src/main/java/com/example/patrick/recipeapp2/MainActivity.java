@@ -245,10 +245,13 @@ public class MainActivity extends ActionBarActivity {
             } else {
                 txt = (TextView) convertView.getTag();
             }
-            String current = ingredientsList.get(position);
+            String current = ingredientsList.get(ingredientsList.size()-1 - position);
+            // uses inverted index so that list is ordered from most recent to least, descending
             txt.setText(current);
             txt.setTag(current);
             return convertView;
         }
+
+
     }
 }
