@@ -40,6 +40,10 @@ public class MainActivity extends ActionBarActivity {
     MyAdapter mAdapt;
     String mSearchJsonStr;
 
+    protected MainActivity getActivity() {
+        return this;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +53,7 @@ public class MainActivity extends ActionBarActivity {
 
         db = new MainDbHelper(this);
         mIngredientsList = db.getAllIngredients();
-        mAdapt = new MyAdapter(this, R.layout.activity_main_fragment, mIngredientsList);
+        mAdapt = new MyAdapter(this, R.layout.fragment_main, mIngredientsList);
         ListView listTask = (ListView) findViewById(R.id.ingredients_list);
         listTask.setAdapter(mAdapt);
     }
@@ -104,14 +108,12 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void executeSearch(View view) {
-        Intent intent = new Intent(this, SearchResultsActivity.class)
-                .putExtra(Intent.EXTRA_TEXT, mSearchJsonStr);
-        startActivity(intent);
+        FetchSearchResultsTask searchResultsTask = new FetchSearchResultsTask();
+        searchResultsTask.execute();
     }
 
     public void test() {
-        FetchSearchResultsTask searchResultsTask = new FetchSearchResultsTask();
-        searchResultsTask.execute();
+
     }
 
     public class FetchSearchResultsTask extends AsyncTask<Void, Void, Void> {
@@ -191,9 +193,12 @@ public class MainActivity extends ActionBarActivity {
 
         @Override
         protected void onPostExecute(Void result) {
-            if (mSearchJsonStr!=null) {
-                ((TextView)findViewById(R.id.hello_world)).setText(mSearchJsonStr);
-            }
+//            if (mSearchJsonStr!=null) {
+//                ((TextView)findViewById(R.id.hello_world)).setText(mSearchJsonStr);
+//            }
+            Intent intent = new Intent(getActivity(), SearchResultsActivity.class)
+                    .putExtra(Intent.EXTRA_TEXT, mSearchJsonStr);
+            startActivity(intent);
         }
     }
 
@@ -219,7 +224,7 @@ public class MainActivity extends ActionBarActivity {
             if (convertView == null) {
                 LayoutInflater inflater = (LayoutInflater) context
                         .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.activity_main_fragment,
+                convertView = inflater.inflate(R.layout.fragment_main,
                         parent, false);
                 txt = (TextView) convertView.findViewById(R.id.ingredient);
                 convertView.setTag(txt);
