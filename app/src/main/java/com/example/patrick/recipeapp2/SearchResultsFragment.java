@@ -95,6 +95,7 @@ public class SearchResultsFragment extends Fragment {
 //                mPosition = position;
 //            }
 //        });
+
         return rootView;
     }
 }

@@ -21,7 +21,7 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 
 /**
- * Defines table and column names for the weather database.
+ * Defines table and column names for the recipe database.
  */
 public class RecipeContract {
 

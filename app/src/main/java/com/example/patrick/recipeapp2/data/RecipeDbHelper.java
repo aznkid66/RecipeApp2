@@ -36,11 +36,6 @@ public class RecipeDbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         final String SQL_CREATE_RECIPE_TABLE = "CREATE TABLE " + RecipeContract.RecipeEntry.TABLE_NAME + " (" +
-                // Why AutoIncrement here, and not above?
-                // Unique keys will be auto-generated in either case.  But for weather
-                // forecasting, it's reasonable to assume the user will want information
-                // for a certain date and all dates *following*, so the forecast data
-                // should be sorted accordingly.
                 RecipeContract.RecipeEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 RecipeContract.RecipeEntry.COLUMN_NAME + " TEXT NOT NULL, " +
                 RecipeContract.RecipeEntry.COLUMN_LINK + " TEXT NOT NULL, " +

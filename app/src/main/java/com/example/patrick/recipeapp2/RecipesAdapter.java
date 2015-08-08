@@ -9,10 +9,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 /**
- * {@link SearchResultsAdapter} exposes a list of recipes
+ * {@link RecipesAdapter} exposes a list of recipes
  * from a {@link Cursor} to a {@link android.widget.ListView}.
  */
-public class SearchResultsAdapter extends CursorAdapter {
+public class RecipesAdapter extends CursorAdapter {
 
     /**
      * Cache of the children views for a forecast list item.
@@ -26,7 +26,7 @@ public class SearchResultsAdapter extends CursorAdapter {
         }
     }
 
-    public SearchResultsAdapter(Context context, Cursor c, int flags) {
+    public RecipesAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
     }
 
@@ -46,7 +46,7 @@ public class SearchResultsAdapter extends CursorAdapter {
 
         // Read recipe name from cursor
         String name = cursor.getString(SearchResultsFragment.COL_RECIPE_NAME);
-        // Find TextView and set weather forecast on it
+        // Find TextView and set recipe name on it
         viewHolder.nameView.setText(name);
 
 
