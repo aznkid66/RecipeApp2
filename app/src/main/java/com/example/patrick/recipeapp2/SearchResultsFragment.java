@@ -1,5 +1,6 @@
 package com.example.patrick.recipeapp2;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.ShareActionProvider;
@@ -12,7 +13,7 @@ public class SearchResultsFragment extends Fragment {
     private static final String LOG_TAG = SearchResultsFragment.class.getSimpleName();
     static final String DETAIL_URI = "URI";
 
-    private ArrayAdapter<String> mSearchResultsAdapter;
+    private RecipesAdapter mRecipesAdapter;
     private ListView mListView;
     private int mPosition = ListView.INVALID_POSITION;
     private boolean mUseTodayLayout;
@@ -68,13 +69,13 @@ public class SearchResultsFragment extends Fragment {
 
         // The ArrayAdapter will take data from a source and
         // use it to populate the ListView it's attached to.
-        mSearchResultsAdapter = new SearchResultsAdapter(getActivity(), null, 0);
+        mRecipesAdapter = new RecipesAdapter(getActivity(), null, 0);
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
         // Get a reference to the ListView, and attach this adapter to it.
-        mListView = (ListView) rootView.findViewById(R.id.listview_forecast);
-        mListView.setAdapter(mSearchResultsAdapter);
+        mListView = (ListView) rootView.findViewById(R.id.listview_recipes);
+        mListView.setAdapter(mRecipesAdapter);
         // this is for the clicked open page
         // We'll call our MainActivity
 //        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -96,49 +97,5 @@ public class SearchResultsFragment extends Fragment {
 //        });
 
         return rootView;
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        // When tablets rotate, the currently selected list item needs to be saved.
-        // When no item is selected, mPosition will be set to Listview.INVALID_POSITION,
-        // so check for that before storing.
-        if (mPosition != ListView.INVALID_POSITION) {
-            outState.putInt(SELECTED_KEY, mPosition);
-        }
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        // This is called when a new Loader needs to be created.  This
-        // fragment only uses one loader, so we don't care about checking the id.
-
-        // this class needs to be finished
-
-
-
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        mSearchResultsAdapter.swapCursor(data);
-        if (mPosition != ListView.INVALID_POSITION) {
-            // If we don't need to restart the loader, and there's a desired position to restore
-            // to, do so now.
-            mListView.smoothScrollToPosition(mPosition);
-        }
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-        mSearchResultsAdapter.swapCursor(null);
-    }
-
-    public void setUseTodayLayout(boolean useTodayLayout) {
-        mUseTodayLayout = useTodayLayout;
-        if (mSearchResultsAdapter != null) {
-            mSearchResultsAdapter.setUseTodayLayout(mUseTodayLayout);
-        }
     }
 }

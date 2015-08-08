@@ -23,6 +23,9 @@
             android:label="@string/title_activity_detail"
             android:parentActivityName=".MainActivity" >
         </activity>
+        <provider
+            android:authorities="com.example.patrick.recipeapp2"
+            android:name=".data.RecipeProvider" />
     </application>
 
 </manifest>

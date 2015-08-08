@@ -1,6 +1,5 @@
 package com.example.patrick.recipeapp2;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -13,10 +12,10 @@ public class SearchResultsActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
+        setContentView(R.layout.activity_search_results);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    //.add(R.id.container, new PlaceholderFragment())
+                    .add(R.id.fragment, new SearchResultsFragment())
                     .commit();
         }
     }
@@ -81,9 +80,11 @@ public class SearchResultsActivity extends ActionBarActivity {
 //                    .replace(R.id.weather_detail_container, fragment, DETAILFRAGMENT_TAG)
 //                    .commit();
 //        } else {
-            Intent intent = new Intent(this, SearchResultsActivity.class)
-                    .setData(contentUri);
-            startActivity(intent);
+
+//            Intent intent = new Intent(this, SearchResultsActivity.class)
+//                    .setData(contentUri);
+//            startActivity(intent);
+
         //}
     }
 
