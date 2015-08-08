@@ -14,9 +14,6 @@ import android.widget.TextView;
  */
 public class SearchResultsAdapter extends CursorAdapter {
 
-    // Flag to determine if we want to use a separate view for "today".
-    private boolean mUseTodayLayout = true;
-
     /**
      * Cache of the children views for a forecast list item.
      */
@@ -24,7 +21,6 @@ public class SearchResultsAdapter extends CursorAdapter {
         public final TextView nameView;
 
         public ViewHolder(View view) {
-
             nameView = (TextView) view.findViewById(R.id.list_item_recipes);
 
         }
@@ -36,13 +32,10 @@ public class SearchResultsAdapter extends CursorAdapter {
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        int layoutId = -1;
-
-        View view = LayoutInflater.from(context).inflate(layoutId, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.list_item_recipes, parent, false);
 
         ViewHolder viewHolder = new ViewHolder(view);
         view.setTag(viewHolder);
-
         return view;
     }
 
