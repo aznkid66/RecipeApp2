@@ -95,6 +95,9 @@ public class SearchResultsFragment extends Fragment {
 
 
         mResultsList = new SearchResultsDbHelper(getActivity()).getAllResults();
+        if (!mResultsList.isEmpty()) {
+            
+        }
         mSearchResultsAdapter = new SearchResultsAdapter(getActivity(), R.layout.list_item_search_results, mResultsList);
         // Get a reference to the ListView, and attach this adapter to it.
         mListView = (ListView) rootView.findViewById(R.id.listview_search_results);
@@ -106,16 +109,7 @@ public class SearchResultsFragment extends Fragment {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                // CursorAdapter returns a cursor at the correct position for getItem(), or null
-                // if it cannot seek to that position.
-//                Cursor cursor = (Cursor) adapterView.getItemAtPosition(position);
-//                if (cursor != null) {
-//                    String locationSetting = Utility.getPreferredLocation(getActivity());
-//                    ((Callback) getActivity())
-//                            .onItemSelected(WeatherContract.WeatherEntry.buildWeatherLocationWithDate(
-//                                    locationSetting, cursor.getLong(COL_WEATHER_DATE)
-//                            ));
-//                }
+
                 mPosition = position;
             }
         });
