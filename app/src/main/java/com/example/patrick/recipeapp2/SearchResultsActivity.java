@@ -1,5 +1,6 @@
 package com.example.patrick.recipeapp2;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -21,12 +22,13 @@ public class SearchResultsActivity extends ActionBarActivity {
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_detail, menu);
-        return true;
-    }
+
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.searchresultsactivity, menu);
+//        return true;
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -81,9 +83,9 @@ public class SearchResultsActivity extends ActionBarActivity {
 //                    .commit();
 //        } else {
 
-//            Intent intent = new Intent(this, SearchResultsActivity.class)
-//                    .setData(contentUri);
-//            startActivity(intent);
+         Intent intent = new Intent(this, SearchResultsActivity.class)
+                    .setData(contentUri);
+            startActivity(intent);
 
         //}
     }

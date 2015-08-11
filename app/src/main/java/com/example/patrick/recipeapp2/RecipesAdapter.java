@@ -21,7 +21,7 @@ public class RecipesAdapter extends CursorAdapter {
         public final TextView nameView;
 
         public ViewHolder(View view) {
-            nameView = (TextView) view.findViewById(R.id.list_item_recipes);
+            nameView = (TextView) view.findViewById(R.id.list_item_search_results_textview);
 
         }
     }
@@ -32,7 +32,7 @@ public class RecipesAdapter extends CursorAdapter {
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        View view = LayoutInflater.from(context).inflate(R.layout.list_item_recipes, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.list_item_search_results, parent, false);
 
         ViewHolder viewHolder = new ViewHolder(view);
         view.setTag(viewHolder);
