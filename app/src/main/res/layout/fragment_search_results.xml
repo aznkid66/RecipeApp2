@@ -10,6 +10,7 @@
     tools:context=".SearchResultsActivity$SearchResultsFragment">
 
     <TextView
+        android:id="@+id/empty_results_list"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:text="sry u starve nao">

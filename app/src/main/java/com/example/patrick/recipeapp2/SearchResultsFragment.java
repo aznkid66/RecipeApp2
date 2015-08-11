@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -96,7 +97,7 @@ public class SearchResultsFragment extends Fragment {
 
         mResultsList = new SearchResultsDbHelper(getActivity()).getAllResults();
         if (!mResultsList.isEmpty()) {
-            
+            ((TextView) rootView.findViewById(R.id.empty_results_list)).setText("");
         }
         mSearchResultsAdapter = new SearchResultsAdapter(getActivity(), R.layout.list_item_search_results, mResultsList);
         // Get a reference to the ListView, and attach this adapter to it.
