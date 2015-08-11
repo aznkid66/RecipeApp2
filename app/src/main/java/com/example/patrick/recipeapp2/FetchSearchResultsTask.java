@@ -150,15 +150,13 @@ public class FetchSearchResultsTask extends AsyncTask<String, Void, Void> {
             }
             searchJsonStr = buffer.toString();
             Log.v(LOG_TAG, searchJsonStr);
-
-            getSearchResultsFromJson(searchJsonStr);
+            SearchResultsDbHelper db = new SearchResultsDbHelper(mContext);
+            db.addFromJsonToDb(searchJsonStr);
 
         } catch (IOException e) {
             Log.e(LOG_TAG, "Error ", e);
             // If the code didn't successfully get the weather data, there's no point in attempting
             // to parse it.
-        } catch (JSONException e) {
-            Log.e(LOG_TAG, "invalid JSON " + e);
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();

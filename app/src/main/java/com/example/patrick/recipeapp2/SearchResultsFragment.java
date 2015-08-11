@@ -1,14 +1,8 @@
 package com.example.patrick.recipeapp2;
 
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.Loader;
-import android.support.v7.widget.ShareActionProvider;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +10,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class SearchResultsFragment extends Fragment {
@@ -25,7 +17,8 @@ public class SearchResultsFragment extends Fragment {
     private static final String LOG_TAG = SearchResultsFragment.class.getSimpleName();
     static final String DETAIL_URI = "URI";
 
-    private RecipesAdapter mRecipesAdapter;
+    private SearchResultsAdapter mSearchResultsAdapter;
+    private List<SearchResultsItem> mResultsList;
     ArrayAdapter<String> tempAdapter;
     private ListView mListView;
     private int mPosition = ListView.INVALID_POSITION;
@@ -59,6 +52,8 @@ public class SearchResultsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         // Add this line in order for this fragment to handle menu events.
         setHasOptionsMenu(true);
+
+
     }
 
 //    @Override
@@ -91,81 +86,56 @@ public class SearchResultsFragment extends Fragment {
 
         super.onCreate(savedInstanceState);
 
+
+
+        // The ArrayAdapter will take data from a source and
+        // use it to populate the ListView it's attached to.
+
         View rootView = inflater.inflate(R.layout.fragment_search_results, container, false);
 
-        // Create some dummy data for the ListView.  Here's a sample weekly forecast
-        String[] data = {
-                "Pizza",
-                "Lasagna",
-                "Wed 6/25 - Cloudy - 22/17",
-                "Thurs 6/26 - Rainy - 18/11",
-                "Fri 6/27 - Foggy - 21/10",
-                "Sat 6/28 - TRAPPED IN WEATHERSTATION - 23/18",
-                "Sun 6/29 - Sunny - 20/7"
-        };
-        List<String> weekForecast = new ArrayList<String>(Arrays.asList(data));
 
-        tempAdapter =
-                new ArrayAdapter<String>(
-                        getActivity(), // The current context (this activity
-                        R.layout.list_item_search_results, // The name of the layout ID.
-                        R.id.list_item_search_results_textview, // The ID of the textview to populate.
-                        weekForecast);
-
+        mResultsList = new SearchResultsDbHelper(getActivity()).getAllResults();
+        mSearchResultsAdapter = new SearchResultsAdapter(getActivity(), R.layout.list_item_search_results, mResultsList);
         // Get a reference to the ListView, and attach this adapter to it.
-                   ListView listView = (ListView) rootView.findViewById(R.id.listview_search_results);
-                   listView.setAdapter(tempAdapter);
+        mListView = (ListView) rootView.findViewById(R.id.listview_search_results);
+        mListView.setAdapter(mSearchResultsAdapter);
+
+        // this is for the clicked open page
+        // We'll call our MainActivity
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                // CursorAdapter returns a cursor at the correct position for getItem(), or null
+                // if it cannot seek to that position.
+//                Cursor cursor = (Cursor) adapterView.getItemAtPosition(position);
+//                if (cursor != null) {
+//                    String locationSetting = Utility.getPreferredLocation(getActivity());
+//                    ((Callback) getActivity())
+//                            .onItemSelected(WeatherContract.WeatherEntry.buildWeatherLocationWithDate(
+//                                    locationSetting, cursor.getLong(COL_WEATHER_DATE)
+//                            ));
+//                }
+                mPosition = position;
+            }
+        });
+
+        // If there's instance state, mine it for useful information.
+        // The end-goal here is that the user never knows that turning their device sideways
+        // does crazy lifecycle related things.  It should feel like some stuff stretched out,
+        // or magically appeared to take advantage of room, but data or place in the app was never
+        // actually *lost*.
+        if (savedInstanceState != null && savedInstanceState.containsKey(SELECTED_KEY)) {
+            // The listview probably hasn't even been populated yet.  Actually perform the
+            // swapout in onLoadFinished.
+            mPosition = savedInstanceState.getInt(SELECTED_KEY);
+        }
+
+//        mRecipesAdapter.setUseTodayLayout(mUseTodayLayout);
 
 
         return rootView;
     }
-    /* Commented the rest of class out for dummy data */
-
-//        // The ArrayAdapter will take data from a source and
-//        // use it to populate the ListView it's attached to.
-//        mRecipesAdapter = new RecipesAdapter(getActivity(), null, 0);
-//
-//        View rootView = inflater.inflate(R.layout.fragment_search_results, container, false);
-//
-//        // Get a reference to the ListView, and attach this adapter to it.
-//        mListView = (ListView) rootView.findViewById(R.id.listview_search_results);
-//        mListView.setAdapter(mRecipesAdapter);
-//        // this is for the clicked open page
-//        // We'll call our MainActivity
-//        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-//                // CursorAdapter returns a cursor at the correct position for getItem(), or null
-//                // if it cannot seek to that position.
-////                Cursor cursor = (Cursor) adapterView.getItemAtPosition(position);
-////                if (cursor != null) {
-////                    String locationSetting = Utility.getPreferredLocation(getActivity());
-////                    ((Callback) getActivity())
-////                            .onItemSelected(WeatherContract.WeatherEntry.buildWeatherLocationWithDate(
-////                                    locationSetting, cursor.getLong(COL_WEATHER_DATE)
-////                            ));
-////                }
-//                mPosition = position;
-//            }
-//        });
-//
-//        // If there's instance state, mine it for useful information.
-//        // The end-goal here is that the user never knows that turning their device sideways
-//        // does crazy lifecycle related things.  It should feel like some stuff stretched out,
-//        // or magically appeared to take advantage of room, but data or place in the app was never
-//        // actually *lost*.
-//        if (savedInstanceState != null && savedInstanceState.containsKey(SELECTED_KEY)) {
-//            // The listview probably hasn't even been populated yet.  Actually perform the
-//            // swapout in onLoadFinished.
-//            mPosition = savedInstanceState.getInt(SELECTED_KEY);
-//        }
-//
-////        mRecipesAdapter.setUseTodayLayout(mUseTodayLayout);
-//
-//
-//        return rootView;
-//    }
 
 //    @Override
 //    public void onActivityCreated(Bundle savedInstanceState) {
