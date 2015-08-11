@@ -19,6 +19,11 @@ public class SearchResultsActivity extends ActionBarActivity {
                     .add(R.id.fragment, new SearchResultsFragment())
                     .commit();
         }
+
+        SearchResultsFragment searchResultsFragment =  ((SearchResultsFragment)getSupportFragmentManager()
+                .findFragmentById(R.id.listview_search_results));
+
+
     }
 
 
@@ -46,24 +51,24 @@ public class SearchResultsActivity extends ActionBarActivity {
     }
 
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        // this needs to be changed for recipe app
-//        String location = Utility.getPreferredLocation( this );
-//        // update the location in our second pane using the fragment manager
-//        if (location != null && !location.equals(mLocation)) {
-//            ForecastFragment ff = (ForecastFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_forecast);
-//            if ( null != ff ) {
-//                ff.onLocationChanged();
-//            }
-//            DetailFragment df = (DetailFragment)getSupportFragmentManager().findFragmentByTag(DETAILFRAGMENT_TAG);
-//            if ( null != df ) {
-//                df.onLocationChanged(location);
-//            }
-//            mLocation = location;
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        // this needs to be changed for recipe app
+////        String location = Utility.getPreferredLocation( this );
+////        // update the location in our second pane using the fragment manager
+////        if (location != null && !location.equals(mLocation)) {
+////            ForecastFragment ff = (ForecastFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_forecast);
+////            if ( null != ff ) {
+////                ff.onLocationChanged();
+////            }
+////            DetailFragment df = (DetailFragment)getSupportFragmentManager().findFragmentByTag(DETAILFRAGMENT_TAG);
+////            if ( null != df ) {
+////                df.onLocationChanged(location);
+////            }
+////            mLocation = location;
 //        }
-    }
+//    }
 
 //    @Override
     public void onItemSelected(Uri contentUri) {

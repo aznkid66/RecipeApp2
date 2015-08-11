@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class SearchResultsFragment extends Fragment {
     static final String DETAIL_URI = "URI";
 
     private RecipesAdapter mRecipesAdapter;
+    ArrayAdapter<String> tempAdapter;
     private ListView mListView;
     private int mPosition = ListView.INVALID_POSITION;
 //    private boolean mUseTodayLayout;
@@ -87,6 +89,10 @@ public class SearchResultsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        super.onCreate(savedInstanceState);
+
+        View rootView = inflater.inflate(R.layout.fragment_search_results, container, false);
+
         // Create some dummy data for the ListView.  Here's a sample weekly forecast
         String[] data = {
                 "Pizza",
@@ -98,7 +104,19 @@ public class SearchResultsFragment extends Fragment {
                 "Sun 6/29 - Sunny - 20/7"
         };
         List<String> weekForecast = new ArrayList<String>(Arrays.asList(data));
-        View rootView = inflater.inflate(R.layout.fragment_search_results, container, false);
+
+        tempAdapter =
+                new ArrayAdapter<String>(
+                        getActivity(), // The current context (this activity
+                        R.layout.list_item_search_results, // The name of the layout ID.
+                        R.id.list_item_search_results_textview, // The ID of the textview to populate.
+                        weekForecast);
+
+        // Get a reference to the ListView, and attach this adapter to it.
+                   ListView listView = (ListView) rootView.findViewById(R.id.listview_search_results);
+                   listView.setAdapter(tempAdapter);
+
+
         return rootView;
     }
     /* Commented the rest of class out for dummy data */
