@@ -97,8 +97,11 @@ public class SearchResultsFragment extends Fragment {
 
 
         mResultsList = new SearchResultsDbHelper(getActivity()).getAllResults();
-        if (!mResultsList.isEmpty()) {
-            ((TextView) rootView.findViewById(R.id.empty_results_list)).setText("");
+        TextView emptyResultsListTextView = (TextView) rootView.findViewById(R.id.empty_results_list);
+        if (mResultsList.isEmpty()) {
+            emptyResultsListTextView.setText(getText(R.string.empty_results_list_message));
+        } else {
+            emptyResultsListTextView.setText(""); 
         }
         mSearchResultsAdapter = new SearchResultsAdapter(getActivity(), R.layout.list_item_search_results, mResultsList);
         // Get a reference to the ListView, and attach this adapter to it.
