@@ -1,5 +1,6 @@
 package com.example.patrick.recipeapp2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -112,6 +113,10 @@ public class SearchResultsFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
                 mPosition = position;
+
+                Intent intent = new Intent(getActivity(), WebpageActivity.class);
+                intent.putExtra("URL", mResultsList.get(position).LINK);
+                getActivity().startActivity(intent);
             }
         });
 
