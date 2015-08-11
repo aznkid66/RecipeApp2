@@ -49,7 +49,7 @@ public class SearchResultsDbHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void addResult(SearchResultsItem result) {
+    public long addResult(SearchResultsItem result) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_RECIPE_NAME, result.NAME); // task name
@@ -59,6 +59,7 @@ public class SearchResultsDbHelper extends SQLiteOpenHelper {
         result.setId(
                 db.insert(TABLE_RESULTS, null, values));
         db.close(); // Closing database connection
+        return result.getId();
     }
 //
 //    public void removeIngredient(String ingredientName) {
@@ -98,7 +99,7 @@ public class SearchResultsDbHelper extends SQLiteOpenHelper {
         return db.delete(TABLE_RESULTS, null, null);
     }
 
-    public void addFromJsonToDb(String json) {
+    public int addFromJsonToDb(String json) {
         final String F2F_COUNT = "count";
         final String F2F_RECIPES = "recipes";
         final String F2F_TITLE = "title";
@@ -106,6 +107,7 @@ public class SearchResultsDbHelper extends SQLiteOpenHelper {
         final String F2F_RANK = "social_rank";
 
         this.deleteAllResults();
+        int numAdded = 0;
         try {
             JSONObject resultsJson = new JSONObject(json);
             int count = resultsJson.getInt(F2F_COUNT);
@@ -117,10 +119,14 @@ public class SearchResultsDbHelper extends SQLiteOpenHelper {
                         recipe.getDouble(F2F_RANK),
                         recipe.getString(F2F_SRC_URL)
                 );
-                this.addResult(item);
+                //this.addResult(item);
+                if (this.addResult(item)!=-1) {
+                    numAdded++;
+                }
             }
         } catch (JSONException e) {
             Log.e(LOG_TAG, "Error putting JSON data into database " + e);
         }
+        return numAdded;
     }
 }

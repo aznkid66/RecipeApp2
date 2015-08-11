@@ -14,8 +14,7 @@
         android:layout_height="wrap_content"
         android:minHeight="?android:attr/listPreferredItemHeight"
         android:gravity="center_vertical"
-        android:id="@+id/list_item_search_results_name"
-        android:text="hello world"/>
+        android:id="@+id/list_item_search_results_name"/>
 
     <TextView
         android:id="@+id/list_item_search_results_rating"

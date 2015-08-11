@@ -23,9 +23,9 @@
             android:label="@string/title_activity_search_results"
             android:parentActivityName=".MainActivity" >
         </activity>
-        <provider
-            android:authorities="com.example.patrick.recipeapp2"
-            android:name=".data.RecipeProvider" />
+        <!--<provider-->
+            <!--android:authorities="com.example.patrick.recipeapp2"-->
+            <!--android:name=".data.RecipeProvider" />-->
     </application>
 
 </manifest>
