@@ -13,5 +13,5 @@
     <string name="remove_ingredient">Remove</string>
     <string name="search">Search</string>
 
-    <string name="empty_results_list_message">sry u starve nao</string>
+    <string name="empty_results_list_message">No results found. Guess you have to eat your ingredients raw.</string>
 </resources>
