@@ -59,7 +59,7 @@ public class SearchResultsFragment extends Fragment {
 
 //    @Override
 //    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        inflater.inflate(R.menu.searchresultsfragment, menu);
+//        inflater.inflate(R.menu.menu_search_results, menu);
 //    }
 
 
@@ -72,11 +72,11 @@ public class SearchResultsFragment extends Fragment {
 
         // Change this code so that user click redirects to
         // recipe website
-       if (id == R.id.action_refresh) {
-//            FetchWeatherTask weatherTask = new FetchWeatherTask();
-//            weatherTask.execute("94043");
+//       if (id == R.id.action_bar) { //search
+//            FetchSearchResultsTask tempTask = new FetchSearchResultsTask();
+//            tempTask.execute("pizza");
 //            return true;
-        }
+//        }
         return super.onOptionsItemSelected(item);
     }
 

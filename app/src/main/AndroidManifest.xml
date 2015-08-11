@@ -23,6 +23,12 @@
             android:label="@string/title_activity_search_results"
             android:parentActivityName=".MainActivity" >
         </activity>
+
+        <activity
+            android:name=".WebpageActivity"
+            android:label="@string/title_activity_webpage"
+            android:parentActivityName=".MainActivity" >
+        </activity>
         <!--<provider-->
             <!--android:authorities="com.example.patrick.recipeapp2"-->
             <!--android:name=".data.RecipeProvider" />-->
