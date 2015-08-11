@@ -27,7 +27,7 @@
         <activity
             android:name=".WebpageActivity"
             android:label="@string/title_activity_webpage"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".SearchResultsActivity" >
         </activity>
         <!--<provider-->
             <!--android:authorities="com.example.patrick.recipeapp2"-->
