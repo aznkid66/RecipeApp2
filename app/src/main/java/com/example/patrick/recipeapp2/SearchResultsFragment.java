@@ -118,6 +118,7 @@ public class SearchResultsFragment extends Fragment {
                 mPosition = position;
 
                 Intent intent = new Intent(getActivity(), WebpageActivity.class);
+                intent.putExtra("RECIPE", mResultsList.get(position).NAME);
                 intent.putExtra("URL", mResultsList.get(position).LINK);
                 getActivity().startActivity(intent);
             }

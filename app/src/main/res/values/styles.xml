@@ -2,8 +2,15 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
-        <!--<item name="colorPrimary">@color/sunshine_blue</item>-->
-        <!--<item name="colorPrimaryDark">@color/sunshine_dark_blue</item>-->
+        <item name="colorPrimary">@color/dark_green</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:buttonStyle">@style/myButton</item>
+    </style>
+
+    <style name="myButton" parent="android:style/Widget.Button">
+        <item name="android:padding">10dp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:background">@color/pale_green</item>
     </style>
 
     <!-- Main activity theme. -->

@@ -9,6 +9,7 @@ public class WebpageActivity extends ActionBarActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setTitle(getIntent().getStringExtra("RECIPE"));
         setContentView(R.layout.activity_webpage);
 
         WebView myWebView = (WebView) findViewById(R.id.activity_webpage);

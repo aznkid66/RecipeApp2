@@ -10,10 +10,11 @@
         android:layout_height="wrap_content">
         <EditText
             android:id="@+id/editText1"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/add_ingredient_button"
             android:ems="10" >
             <requestFocus />
         </EditText>
@@ -23,7 +24,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:layout_marginRight="14dp"
             android:text="@string/add_ingredient"
             android:onClick="addIngredientNow"/>
         </RelativeLayout>
@@ -31,6 +31,8 @@
     <ListView
         android:id="@+id/ingredients_list"
         android:layout_width="match_parent"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="10dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/add_ingredient_header"
@@ -40,6 +42,8 @@
         android:id="@+id/search_button"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:background="@color/dark_green"
+        android:textColor="@color/white"
         android:layout_alignParentBottom="true"
         android:text="@string/search"
         android:onClick="executeSearchFromIngredients"/>
