@@ -41,6 +41,11 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.ic_logo);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         db = new MainDbHelper(this);
         mIngredientsList = db.getAllIngredients();
         mAdapt = new MyAdapter(this, R.layout.fragment_main, mIngredientsList);
@@ -64,8 +69,6 @@ public class MainActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
-        } else if (id == R.id.action_refresh) {
             return true;
         }
 
