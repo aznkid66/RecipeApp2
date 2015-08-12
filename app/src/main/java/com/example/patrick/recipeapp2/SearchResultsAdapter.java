@@ -43,17 +43,14 @@ public class SearchResultsAdapter extends ArrayAdapter<SearchResultsItem> {
                         parent, false);
                 name = (TextView) convertView.findViewById(R.id.list_item_search_results_name);
                 rating = (TextView) convertView.findViewById(R.id.list_item_search_results_rating);
-                link = (TextView) convertView.findViewById(R.id.list_item_search_results_link);
                 convertView.setTag(name);
             } else {
                 name = (TextView) convertView.getTag();
                 rating = (TextView) convertView.findViewById(R.id.list_item_search_results_rating);
-                link = (TextView) convertView.findViewById(R.id.list_item_search_results_link);
             }
             SearchResultsItem current = resultsList.get(position);
             name.setText(current.NAME);
             rating.setText(String.format("%.1f", current.RATING));
-            link.setText(current.LINK);
             return convertView;
         }
 
