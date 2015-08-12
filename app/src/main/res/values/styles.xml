@@ -2,21 +2,22 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/dark_green</item>
+        <item name="colorPrimary">@color/black</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:buttonStyle">@style/myButton</item>
     </style>
 
     <style name="myButton" parent="android:style/Widget.Button">
         <item name="android:padding">10dp</item>
+        <item name="android:width">100dp</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:background">@color/pale_green</item>
     </style>
 
-    <!-- Main activity theme. -->
+    <!-- Main activity theme.
     <style name="RecipesTheme" parent="AppTheme">
         <item name="actionBarStyle">@style/ActionBar.Solid.Recipaedia.NoTitle</item>
-    </style>
+    </style>-->
 
     <!-- Settings activity theme. -->
     <style name="SettingsTheme" parent="AppTheme">
